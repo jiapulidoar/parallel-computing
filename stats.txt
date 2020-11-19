@@ -1,0 +1,31 @@
+size,threads,time
+4k,threads, Time
+2,0.013020
+4k,threads, Time
+4,0.008002
+4k,threads, Time
+8,0.008107
+4k,threads, Time
+16,0.007752
+4k,threads, Time
+32,0.007833
+1080p,threads, Time
+2,0.015408
+1080p,threads, Time
+4,0.012324
+1080p,threads, Time
+8,0.007889
+1080p,threads, Time
+16,0.008605
+1080p,threads, Time
+32,0.009093
+720p,threads, Time
+2,0.013807
+720p,threads, Time
+4,0.006555
+720p,threads, Time
+8,0.006205
+720p,threads, Time
+16,0.008574
+720p,threads, Time
+32,0.006459
