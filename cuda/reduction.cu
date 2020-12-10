@@ -88,10 +88,10 @@ int main(int argc, char **argv)
   cudaGetDeviceProperties(&deviceProp, 0);
   int cores_mp = _ConvertSMVer2Cores(deviceProp.major, deviceProp.minor);
 
-  /*printf("  (%2d) Multiprocessors, (%3d) CUDA Cores/MP:     %d CUDA Cores\n",
+  printf("  (%2d) Multiprocessors, (%3d) CUDA Cores/MP:     %d CUDA Cores\n",
          deviceProp.multiProcessorCount,
          _ConvertSMVer2Cores(deviceProp.major, deviceProp.minor),
-         _ConvertSMVer2Cores(deviceProp.major, deviceProp.minor) * deviceProp.multiProcessorCount); */
+         _ConvertSMVer2Cores(deviceProp.major, deviceProp.minor) * deviceProp.multiProcessorCount); 
 
 
   if (n_threads != 0)
@@ -182,7 +182,7 @@ int main(int argc, char **argv)
   }
 
   // *******************************************************  Matrix convertion to Mat
-  /*
+
   Mat resized_img(height, width, CV_8UC(3), resized);
   imshow("Display window", resized_img);
   int k = waitKey(0); // Wait for a keystroke in the window
@@ -191,6 +191,6 @@ int main(int argc, char **argv)
   {
     imwrite(image_out_path, resized_img);
   }
-*/
+
   return 0;
 }

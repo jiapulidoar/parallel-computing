@@ -83,3 +83,17 @@ size,block,threads,time
 720p,16,256,0.000017
 720p,16,512,0.000017
 720p,16,1024,0.000027
+size,block,threads,time
+4k,  ( 3) Multiprocessors, (128) CUDA Cores/MP:     384 CUDA Cores
+2,16,0.000015
+4k,  ( 3) Multiprocessors, (128) CUDA Cores/MP:     384 CUDA Cores
+2,32,0.000023
+4k,  ( 3) Multiprocessors, (128) CUDA Cores/MP:     384 CUDA Cores
+2,64,0.000015
+4k,  ( 3) Multiprocessors, (128) CUDA Cores/MP:     384 CUDA Cores
+2,128,0.000016
+4k,  ( 3) Multiprocessors, (128) CUDA Cores/MP:     384 CUDA Cores
+2,256,0.000015
+4k,  ( 3) Multiprocessors, (128) CUDA Cores/MP:     384 CUDA Cores
+2,512,0.000017
+4k,
