@@ -16,6 +16,7 @@ const int width = 854;
 int main(int argc, char *argv[])
 {
   int tasks, iam;
+  double time, mytime;
 
   std::string image_path = argv[1];
   std::string image_out_path = argv[2];
@@ -33,9 +34,11 @@ int main(int argc, char *argv[])
   int cn = img.channels(), cols = img.cols, rows = img.rows;
   uint8_t *resized = (uint8_t *)malloc(img.channels() * height * width * sizeof(uint8_t));
 
-  gettimeofday(&tval_before, NULL);
+  //gettimeofday(&tval_before, NULL);
   MPI_Status status;
   MPI_Init(&argc, &argv);
+
+  double t1, t2;
 
   MPI_Comm_size(MPI_COMM_WORLD, &tasks);
   MPI_Comm_rank(MPI_COMM_WORLD, &iam);
@@ -50,6 +53,8 @@ int main(int argc, char *argv[])
 
   uint8_t *_resized = (uint8_t *)malloc(cn * divi * width * sizeof(uint8_t));
   //printf("p:%d w:%d h:%d\n", tasks, width, divi);
+
+  t1 = MPI_Wtime();    // start reduction  Algorithm 
 
   float x_ratio = (cols - 1) / (width - 1);
   float y_ratio = (rows - 1) / (height - 1);
@@ -84,6 +89,13 @@ int main(int argc, char *argv[])
     idx++;
   }
 
+  t2 = MPI_Wtime();    // end reduction  Algorithm 
+
+  mytime = t2 - t1;
+  //printf("time: %1.5f\n", mytime);
+
+  MPI_Reduce(&mytime, &time, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
   //   if (iam == 1)
   // {
   //   Mat resized_img(divi, width, CV_8UC(3), _resized);
@@ -103,10 +115,10 @@ int main(int argc, char *argv[])
 
       if (iam == 0)
   {
-    gettimeofday(&tval_after, NULL);
-    timersub(&tval_after, &tval_before, &tval_result);
+    //gettimeofday(&tval_after, NULL);
+    //timersub(&tval_after, &tval_before, &tval_result);
 
-    printf("%d,%ld.%06ld\n",tasks,(long int) tval_result.tv_sec, (long int)tval_result.tv_usec);
+    printf("%d,%1.5f\n",tasks, time);
 
   /*
     Mat resized_img(height, width, CV_8UC(3), resized);
