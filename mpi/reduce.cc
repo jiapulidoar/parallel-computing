@@ -5,6 +5,8 @@
 #include <string.h>
 #include <mpi.h>
 #include <math.h>
+#include <sys/time.h>
+
 #define MSG_LENGTH 10
 
 using namespace cv;
@@ -18,6 +20,9 @@ int main(int argc, char *argv[])
   std::string image_path = argv[1];
   std::string image_out_path = argv[2];
 
+  // time 
+  struct timeval tval_before, tval_after, tval_result;
+
   Mat img = imread(image_path, IMREAD_COLOR);
   if (img.empty())
   {
@@ -28,6 +33,7 @@ int main(int argc, char *argv[])
   int cn = img.channels(), cols = img.cols, rows = img.rows;
   uint8_t *resized = (uint8_t *)malloc(img.channels() * height * width * sizeof(uint8_t));
 
+  gettimeofday(&tval_before, NULL);
   MPI_Status status;
   MPI_Init(&argc, &argv);
 
@@ -43,7 +49,7 @@ int main(int argc, char *argv[])
   int row = (iam * divi);
 
   uint8_t *_resized = (uint8_t *)malloc(cn * divi * width * sizeof(uint8_t));
-  printf("p:%d w:%d h:%d\n", tasks, width, divi);
+  //printf("p:%d w:%d h:%d\n", tasks, width, divi);
 
   float x_ratio = (cols - 1) / (width - 1);
   float y_ratio = (rows - 1) / (height - 1);
@@ -97,6 +103,12 @@ int main(int argc, char *argv[])
 
       if (iam == 0)
   {
+    gettimeofday(&tval_after, NULL);
+    timersub(&tval_after, &tval_before, &tval_result);
+
+    printf("%d,%ld.%06ld\n",tasks,(long int) tval_result.tv_sec, (long int)tval_result.tv_usec);
+
+  /*
     Mat resized_img(height, width, CV_8UC(3), resized);
     imshow("Display window", resized_img);
     int k = waitKey(0); // Wait for a keystroke in the window
@@ -105,7 +117,7 @@ int main(int argc, char *argv[])
     {
       imwrite(image_out_path, resized_img);
     }
-
+*/ 
   }
 
 }
